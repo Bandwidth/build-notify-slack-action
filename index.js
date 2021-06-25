@@ -1,7 +1,7 @@
 const core = require("@actions/core");
 const fetch = require("node-fetch");
 
-(aysnc () => {
+(async () => {
   try {
     const jobStatus = core.getInput("job-status");
     const text = core.getInput("text");
