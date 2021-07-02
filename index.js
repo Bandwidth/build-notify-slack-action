@@ -29,6 +29,7 @@ const fetch = require("node-fetch");
                 text: `GitHub Action: *${status === "success" ? "SUCCESS" : status === "failure" ? "FAILURE" : "CANCELLED"}*`,
               },
             },
+            customSection
           ],
         },
       ],
