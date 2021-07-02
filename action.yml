@@ -3,8 +3,6 @@ description: 'Send notifications to Slack of the current build status'
 inputs:
   job-status:
     description: 'Current job status of the build'
-  text:
-    description: 'Custom text to send to the channel'
   slack-bot-token:
     description: 'Bot token used to send messages'
   slack-channel:

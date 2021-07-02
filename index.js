@@ -1,38 +1,24 @@
 const core = require("@actions/core");
 const fetch = require("node-fetch");
 
+const { buildSlackAttachments, formatChannelName } = require('./src/utils');
+
 (async () => {
+  const { payload, ref, workflow, eventName } = github.context;
+  const { owner, repo } = context.repo;
+
   try {
     const jobStatus = core.getInput("job-status");
-    const text = core.getInput("text");
     const slackChannel = core.getInput("slack-channel");
     const slackBotToken = core.getInput("slack-bot-token");
 
-    const customSection = {
-        type: "section",
-        text: {
-            type: "mkdwn",
-            text: text
-        }
-    }
+    const color = jobStatus === "success" ? "#2e993e" : jobStatus === "failure" ? "#bd0f26" : "#d29d0c";
+
+    const attachments = buildSlackAttachments({ jobStatus, color, github });
 
     const payload = {
       channel: slackChannel,
-      attachments: [
-        {
-          color: jobStatus === "success" ? "#2e993e" : jobStatus === "failure" ? "#bd0f26" : "#d29d0c",
-          blocks: [
-            {
-              type: "section",
-              text: {
-                type: "mrkdwn",
-                text: `GitHub Action: *${jobStatus === "success" ? "SUCCESS" : jobStatus === "failure" ? "FAILURE" : "CANCELLED"}*`,
-              },
-            },
-            customSection
-          ],
-        },
-      ],
+      attachments: attachments
     };
 
     const result = await fetch("https://slack.com/api/chat.postMessage", {
