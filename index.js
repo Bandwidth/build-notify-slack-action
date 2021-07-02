@@ -1,4 +1,5 @@
 const core = require("@actions/core");
+const github = require('@actions/github');
 const fetch = require("node-fetch");
 
 const { buildSlackAttachments, formatChannelName } = require('./src/utils');
