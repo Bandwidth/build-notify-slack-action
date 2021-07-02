@@ -5,9 +5,6 @@ const fetch = require("node-fetch");
 const { buildSlackAttachments, formatChannelName } = require('./src/utils');
 
 (async () => {
-  const { payload, ref, workflow, eventName } = github.context;
-  const { owner, repo } = context.repo;
-
   try {
     const jobStatus = core.getInput("job-status");
     const slackChannel = core.getInput("slack-channel");
