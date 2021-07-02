@@ -3,7 +3,7 @@ const fetch = require("node-fetch");
 
 (async () => {
   try {
-    const status = core.getInput("status");
+    const jobStatus = core.getInput("job-status");
     const text = core.getInput("text");
     const slackChannel = core.getInput("slack-channel");
     const slackBotToken = core.getInput("slack-bot-token");
@@ -20,13 +20,13 @@ const fetch = require("node-fetch");
       channel: slackChannel,
       attachments: [
         {
-          color: status === "success" ? "#2e993e" : status === "failure" ? "#bd0f26" : "#d29d0c",
+          color: jobStatus === "success" ? "#2e993e" : jobStatus === "failure" ? "#bd0f26" : "#d29d0c",
           blocks: [
             {
               type: "section",
               text: {
                 type: "mrkdwn",
-                text: `GitHub Action: *${status === "success" ? "SUCCESS" : status === "failure" ? "FAILURE" : "CANCELLED"}*`,
+                text: `GitHub Action: *${jobStatus === "success" ? "SUCCESS" : jobStatus === "failure" ? "FAILURE" : "CANCELLED"}*`,
               },
             },
             customSection

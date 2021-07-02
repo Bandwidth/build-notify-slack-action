@@ -14,7 +14,7 @@ jobs:
         if: always()
         with:
           status: ${{ job.status }}
-          message: Hello world, success
+          text: Hello world, success
           slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
           slack-channel: ${{ secrets.SLACK_CHANNEL }}
 
@@ -31,6 +31,6 @@ jobs:
         if: always()
         with:
           status: ${{ job.status }}
-          message: Hello world, failure
+          text: Hello world, failure
           slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
           slack-channel: ${{ secrets.SLACK_CHANNEL }}
