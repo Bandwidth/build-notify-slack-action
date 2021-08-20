@@ -19,7 +19,8 @@ function buildSlackAttachments({ status, color, github }) {
       break;
     case 'workflow_dispatch':
       referenceLink = {
-        title: 'Manual Trigger'
+        title: 'Manual Trigger',
+        short: true
       }
       break;
     default:
