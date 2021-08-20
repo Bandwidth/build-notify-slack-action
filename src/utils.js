@@ -20,6 +20,14 @@ function buildSlackAttachments({ status, color, github }) {
     case 'workflow_dispatch':
       referenceLink = {
         title: 'Manual Trigger',
+        value: `<https://github.com/${owner}/${repo}/commit/${sha} | ${branch}>`,
+        short: true
+      }
+      break;
+    case 'schedule':
+      referenceLink = {
+        title: 'Schedule',
+        value: `<https://github.com/${owner}/${repo}/commit/${sha} | ${branch}>`,
         short: true
       }
       break;
