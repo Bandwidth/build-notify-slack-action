@@ -10,9 +10,10 @@ const { buildSlackAttachments, formatChannelName } = require('./src/utils');
     const slackChannel = core.getInput("slack-channel");
     const slackBotToken = core.getInput("slack-bot-token");
 
+    const status = jobStatus === "success" ? "Success" : jobStatus === "failure" ? "Failure" : "Cancelled";
     const color = jobStatus === "success" ? "#2e993e" : jobStatus === "failure" ? "#bd0f26" : "#d29d0c";
 
-    const attachments = buildSlackAttachments({ jobStatus, color, github });
+    const attachments = buildSlackAttachments({ status, color, github });
 
     const payload = {
       channel: slackChannel,
@@ -29,6 +30,7 @@ const { buildSlackAttachments, formatChannelName } = require('./src/utils');
         Accept: "application/json",
       },
     });
+
     if (!result.ok) {
       throw new Error(`Server error ${result.status}`);
     }
