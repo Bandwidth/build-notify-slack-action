@@ -14,17 +14,19 @@ function buildSlackAttachments({ status, color, github }) {
       referenceLink = {
         title: 'Pull Request',
         value: `<${payload.pull_request.html_url} | ${payload.pull_request.title}>`,
-        short: true,
+        short: true
       }
+      break;
     case 'workflow_dispatch':
       referenceLink = {
         title: 'Manual Trigger'
       }
+      break;
     default:
       referenceLink = {
         title: 'Branch',
         value: `<https://github.com/${owner}/${repo}/commit/${sha} | ${branch}>`,
-        short: true,
+        short: true
       }
   }
 
@@ -35,23 +37,23 @@ function buildSlackAttachments({ status, color, github }) {
         {
           title: 'Repo',
           value: `<https://github.com/${owner}/${repo} | ${owner}/${repo}>`,
-          short: true,
+          short: true
         },
         {
           title: 'Workflow',
           value: `<https://github.com/${owner}/${repo}/actions/runs/${runId} | ${workflow}>`,
-          short: true,
+          short: true
         },
         {
           title: 'Status',
           value: status,
-          short: true,
+          short: true
         },
         referenceLink,
         {
           title: 'Event',
           value: eventName,
-          short: true,
+          short: true
         },
       ],
       footer_icon: 'https://github.githubassets.com/favicon.ico',
