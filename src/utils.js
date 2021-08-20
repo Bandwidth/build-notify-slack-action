@@ -3,24 +3,30 @@ const { context } = require('@actions/github');
 function buildSlackAttachments({ status, color, github }) {
   const { payload, ref, workflow, eventName } = github.context;
   const { owner, repo } = context.repo;
-  const event = eventName;
-  const branch = event === 'pull_request' ? payload.pull_request.head.ref : ref.replace('refs/heads/', '');
+  const branch = eventName === 'pull_request' ? payload.pull_request.head.ref : ref.replace('refs/heads/', '');
 
-  const sha = event === 'pull_request' ? payload.pull_request.head.sha : github.context.sha;
+  const sha = eventName === 'pull_request' ? payload.pull_request.head.sha : github.context.sha;
   const runId = parseInt(process.env.GITHUB_RUN_ID, 10);
 
-  const referenceLink =
-    event === 'pull_request'
-      ? {
-          title: 'Pull Request',
-          value: `<${payload.pull_request.html_url} | ${payload.pull_request.title}>`,
-          short: true,
-        }
-      : {
-          title: 'Branch',
-          value: `<https://github.com/${owner}/${repo}/commit/${sha} | ${branch}>`,
-          short: true,
-        };
+  const referenceLink;
+  switch (eventName) {
+    case 'pull_request':
+      referenceLink = {
+        title: 'Pull Request',
+        value: `<${payload.pull_request.html_url} | ${payload.pull_request.title}>`,
+        short: true,
+      }
+    case 'workflow_dispatch':
+      referenceLink = {
+        title: 'Manual Trigger'
+      }
+    default:
+      referenceLink = {
+        title: 'Branch',
+        value: `<https://github.com/${owner}/${repo}/commit/${sha} | ${branch}>`,
+        short: true,
+      }
+  }
 
   return [
     {
@@ -44,7 +50,7 @@ function buildSlackAttachments({ status, color, github }) {
         referenceLink,
         {
           title: 'Event',
-          value: event,
+          value: eventName,
           short: true,
         },
       ],
