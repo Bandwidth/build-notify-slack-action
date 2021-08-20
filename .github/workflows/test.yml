@@ -1,0 +1,34 @@
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  test-success:
+    runs-on: ubuntu-latest
+    name: Test the action on success
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Success
+        run: exit 0
+      - name: Action
+        uses: ./
+        if: always()
+        with:
+          job-status: ${{ job.status }}
+          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+          slack-channel: ${{ secrets.SLACK_CHANNEL }}
+
+  test-failure:
+    runs-on: ubuntu-latest
+    name: Test the action on failure
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Failure
+        run: exit 1
+      - name: Action
+        uses: ./
+        if: always()
+        with:
+          job-status: ${{ job.status }}
+          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+          slack-channel: ${{ secrets.SLACK_CHANNEL }}

@@ -1,37 +1,23 @@
 const core = require("@actions/core");
+const github = require('@actions/github');
 const fetch = require("node-fetch");
 
-(aysnc () => {
+const { buildSlackAttachments, formatChannelName } = require('./src/utils');
+
+(async () => {
   try {
     const jobStatus = core.getInput("job-status");
-    const text = core.getInput("text");
     const slackChannel = core.getInput("slack-channel");
     const slackBotToken = core.getInput("slack-bot-token");
 
-    const customSection = {
-        type: "section",
-        text: {
-            type: "mkdwn",
-            text: text
-        }
-    }
+    const status = jobStatus === "success" ? "Success" : jobStatus === "failure" ? "Failure" : "Cancelled";
+    const color = jobStatus === "success" ? "#2e993e" : jobStatus === "failure" ? "#bd0f26" : "#d29d0c";
+
+    const attachments = buildSlackAttachments({ status, color, github });
 
     const payload = {
       channel: slackChannel,
-      attachments: [
-        {
-          color: jobStatus === "success" ? "#2e993e" : jobStatus === "failure" ? "#bd0f26" : "#d29d0c",
-          blocks: [
-            {
-              type: "section",
-              text: {
-                type: "mrkdwn",
-                text: `GitHub Action: *${jobStatus === "success" ? "SUCCESS" : jobStatus === "failure" ? "FAILURE" : "CANCELLED"}*`,
-              },
-            },
-          ],
-        },
-      ],
+      attachments: attachments
     };
 
     const result = await fetch("https://slack.com/api/chat.postMessage", {
@@ -44,6 +30,7 @@ const fetch = require("node-fetch");
         Accept: "application/json",
       },
     });
+
     if (!result.ok) {
       throw new Error(`Server error ${result.status}`);
     }
