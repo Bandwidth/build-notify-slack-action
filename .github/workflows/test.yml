@@ -6,9 +6,11 @@ jobs:
     name: Test the action on success
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+
       - name: Success
         run: exit 0
+
       - name: Action
         uses: ./
         if: always()
@@ -22,9 +24,11 @@ jobs:
     name: Test the action on failure
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+
       - name: Failure
         run: exit 1
+
       - name: Action
         uses: ./
         if: always()
