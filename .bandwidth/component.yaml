@@ -1,0 +1,14 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  schemaVersion: v1.0.0
+  name: build-notify-slack-action
+  description: An action that notifies Slack of the build status.
+  annotations:
+    github.com/project-slug: Bandwidth/build-notify-slack-action
+  organization: BW
+  costCenter: UNKNOWN
+spec:
+  type: GitHub Action
+  owner: github/band-swi
+  lifecycle: Available

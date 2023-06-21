@@ -1,0 +1,11 @@
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  schemaVersion: v1.0.0
+  name: build-notify-slack-action-location
+  description: Links to additional entities in the build-notify-slack-action repository.
+  annotations:
+    github.com/project-slug: Bandwidth/build-notify-slack-action
+spec:
+  targets:
+    - ./component.yaml
