@@ -8,7 +8,7 @@ See [action.yml](action.yml)
 
 ```yaml
 steps:
-- uses: bandwidth/build-notify-slack-action
+- uses: Bandwidth/build-notify-slack-action@v2
   with:
     job-status: ${{ job.status }}
     slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
