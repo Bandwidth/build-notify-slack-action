@@ -1,12 +1,17 @@
-on: [push, pull_request, workflow_dispatch]
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
 
 jobs:
   test-success:
-    runs-on: ubuntu-latest
+    runs-on: ${{ fromJSON(vars.SWI_GLORG_PROD_UBUNTU_2204) }}
     name: Test the action on success
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Success
         run: exit 0
@@ -20,11 +25,11 @@ jobs:
           slack-channel: ${{ secrets.SLACK_CHANNEL }}
 
   test-failure:
-    runs-on: ubuntu-latest
+    runs-on: ${{ fromJSON(vars.SWI_GLORG_PROD_UBUNTU_2204) }}
     name: Test the action on failure
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Failure
         run: exit 1
