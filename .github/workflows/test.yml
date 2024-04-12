@@ -1,4 +1,9 @@
-on: [push, pull_request, workflow_dispatch]
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
 
 jobs:
   test-success:
@@ -6,7 +11,7 @@ jobs:
     name: Test the action on success
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Success
         run: exit 0
@@ -24,7 +29,7 @@ jobs:
     name: Test the action on failure
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Failure
         run: exit 1

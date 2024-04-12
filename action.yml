@@ -8,5 +8,5 @@ inputs:
   slack-channel:
     description: 'Destination channel to send messages'
 runs:
-  using: 'node16'
+  using: 'node20'
   main: 'index.js'
