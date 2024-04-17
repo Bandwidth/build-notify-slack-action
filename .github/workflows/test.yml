@@ -7,7 +7,7 @@ on:
 
 jobs:
   test-success:
-    runs-on: ${{ fromJSON(vars.SWI_GLORG_PROD_UBUNTU_2204) }}
+    runs-on: ubuntu-latest
     name: Test the action on success
     steps:
       - name: Checkout
@@ -25,7 +25,7 @@ jobs:
           slack-channel: ${{ secrets.SLACK_CHANNEL }}
 
   test-failure:
-    runs-on: ${{ fromJSON(vars.SWI_GLORG_PROD_UBUNTU_2204) }}
+    runs-on: ubuntu-latest
     name: Test the action on failure
     steps:
       - name: Checkout
