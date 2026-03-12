@@ -10,8 +10,23 @@ const { buildSlackAttachments, formatChannelName } = require('./src/utils');
     const slackChannel = core.getInput("slack-channel");
     const slackBotToken = core.getInput("slack-bot-token");
 
-    const status = jobStatus === "success" ? "Success" : jobStatus === "failure" ? "Failure" : "Cancelled";
-    const color = jobStatus === "success" ? "#2e993e" : jobStatus === "failure" ? "#bd0f26" : "#d29d0c";
+    const status =
+        jobStatus === "success"
+          ? "Success"
+          : jobStatus === "failure"
+          ? "Failure"
+          : jobStatus === "needs_approval"
+          ? "Needs Approval"
+          : "Cancelled";
+
+    const color =
+        jobStatus === "success"
+          ? "#2e993e"
+          : jobStatus === "failure"
+          ? "#bd0f26"
+          : jobStatus === "needs_approval"
+          ? "#6b61c5"
+          : "#d29d0c";
 
     const attachments = buildSlackAttachments({ status, color, github });
 
